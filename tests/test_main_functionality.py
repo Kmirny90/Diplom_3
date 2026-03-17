@@ -25,11 +25,16 @@ class TestMainFunctionality:
         page.open_ingredient_modal()
         assert page.is_modal_opened()
 
+    @allure.title("Модальное окно открывается при клике на ингредиент")
+    def test_modal_opens(self, driver):
+        page = MainPage(driver)
+        page.open_ingredient_modal()
+        assert page.is_modal_opened()
+
     @allure.title("Модальное окно закрывается по крестику")
     def test_modal_closes(self, driver):
         page = MainPage(driver)
         page.open_ingredient_modal()
-        assert page.is_modal_opened()
         page.close_modal()
         assert page.is_modal_closed()
 
