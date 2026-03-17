@@ -24,3 +24,12 @@ class OrderFeedPage(BasePage):
     def get_order_numbers_from_feed(self) -> list:
         elements = self._driver.find_elements(*OrderFeedLocators.ORDER_ITEMS)
         return [el.text for el in elements]
+
+    @allure.step("Ожидать появления заказа {order_number} в разделе 'В работе'")
+    def wait_for_order_in_progress(self, order_number, timeout=15):
+        self._wait.until(
+            lambda driver: any(
+                order_number in order or f"0{order_number}" in order
+                for order in self.get_orders_in_progress()
+            )
+        )

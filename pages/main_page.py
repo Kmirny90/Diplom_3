@@ -72,7 +72,14 @@ class MainPage(BasePage):
 
     @allure.step("Получить номер заказа")
     def get_order_number(self) -> str:
+
         element = self._wait.until(EC.visibility_of_element_located(MainLocators.ORDER_NUMBER))
+
+
+        self._wait.until(
+            lambda driver: element.text not in ["", "9999", "0"]
+        )
+
         return element.text.replace('#', '').strip()
 
     @allure.step("Закрыть модальное окно заказа")
@@ -80,4 +87,6 @@ class MainPage(BasePage):
         self.click(MainLocators.ORDER_MODAL_CLOSE_BUTTON)
 
         self._wait.until(EC.invisibility_of_element_located(MainLocators.ORDER_MODAL_TITLE))
+
+
 
