@@ -1,5 +1,4 @@
 import allure
-from selenium.webdriver.support.ui import WebDriverWait
 from pages.main_page import MainPage
 
 
@@ -45,10 +44,7 @@ class TestMainFunctionality:
         initial_count = page.get_ingredient_counter_by_index(index)
         page.add_ingredient_to_constructor_by_index(index)
 
-
-        WebDriverWait(driver, 5).until(
-            lambda driver: page.get_ingredient_counter_by_index(index) != initial_count
-        )
+        page.wait_for_counter_change(index, initial_count)
 
         new_count = page.get_ingredient_counter_by_index(index)
         assert new_count == initial_count + 2
@@ -61,10 +57,7 @@ class TestMainFunctionality:
         initial_count = page.get_ingredient_counter_by_index(index)
         page.add_ingredient_to_constructor_by_index(index)
 
-
-        WebDriverWait(driver, 5).until(
-            lambda driver: page.get_ingredient_counter_by_index(index) != initial_count
-        )
+        page.wait_for_counter_change(index, initial_count)
 
         new_count = page.get_ingredient_counter_by_index(index)
         assert new_count == initial_count + 1

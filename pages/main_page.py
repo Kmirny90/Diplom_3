@@ -2,6 +2,7 @@ import allure
 from pages.base_page import BasePage
 from locators.main_locators import MainLocators
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 
@@ -87,6 +88,12 @@ class MainPage(BasePage):
         self.click(MainLocators.ORDER_MODAL_CLOSE_BUTTON)
 
         self._wait.until(EC.invisibility_of_element_located(MainLocators.ORDER_MODAL_TITLE))
+
+    @allure.step("Ожидать изменения счетчика ингредиента {index}")
+    def wait_for_counter_change(self, index, initial_count, timeout=5):
+        WebDriverWait(self._driver, timeout).until(
+            lambda driver: self.get_ingredient_counter_by_index(index) != initial_count
+        )
 
 
 
